@@ -1,18 +1,50 @@
 export function countHouses(input: string): number {
   let instructions: Direction[] = input.trim().split('') as Direction[]
   let housesVisitedTracker = instructions.reduce<Tracker>(
-    ({ map, lastCoordinate }, instruction) => {
+    ({ map, lastSantaCoordinate }, instruction) => {
       let determineNextCoordinate = instructionToCoordinateMapper(instruction)
-      let coordinate = determineNextCoordinate(lastCoordinate)
+      let coordinate = determineNextCoordinate(lastSantaCoordinate)
 
       return {
         map: makeNewMap(map, coordinate),
-        lastCoordinate: coordinate,
+        lastSantaCoordinate: coordinate,
       }
     },
     {
       map: { '0,0': 1 },
-      lastCoordinate: { x: 0, y: 0 },
+      lastSantaCoordinate: { x: 0, y: 0 },
+    }
+  )
+
+  return numHousesVisited(housesVisitedTracker)
+}
+
+export function countHousesWithRoboSanta(input: string): number {
+  let instructions: Direction[] = input.trim().split('') as Direction[]
+  let housesVisitedTracker = instructions.reduce<TrackerWithRoboSanta>(
+    (
+      { map, lastSantaCoordinate, lastRoboSantaCoordinate },
+      instruction,
+      index
+    ) => {
+      let isNormalSanta = index % 2 === 0
+      let determineNextCoordinate = instructionToCoordinateMapper(instruction)
+      let coordinate = determineNextCoordinate(
+        isNormalSanta ? lastSantaCoordinate : lastRoboSantaCoordinate
+      )
+
+      return {
+        map: makeNewMap(map, coordinate),
+        lastSantaCoordinate: isNormalSanta ? coordinate : lastSantaCoordinate,
+        lastRoboSantaCoordinate: isNormalSanta
+          ? lastRoboSantaCoordinate
+          : coordinate,
+      }
+    },
+    {
+      map: { '0,0': 2 },
+      lastSantaCoordinate: { x: 0, y: 0 },
+      lastRoboSantaCoordinate: { x: 0, y: 0 },
     }
   )
 
@@ -62,5 +94,7 @@ interface Coordinate {
 }
 interface Tracker {
   map: CountedSet
-  lastCoordinate: Coordinate
+  lastSantaCoordinate: Coordinate
 }
+
+type TrackerWithRoboSanta = Tracker & { lastRoboSantaCoordinate: Coordinate }
