@@ -10,6 +10,7 @@
   },
   "devDependencies": {
     "@types/jest": "^21.1.8",
+    "@types/md5": "^2.1.32",
     "@types/node": "^8.0.54",
     "husky": "^0.14.3",
     "jest": "^21.2.1",
@@ -17,5 +18,8 @@
     "prettier": "^1.8.2",
     "ts-jest": "^21.2.4",
     "typescript": "^2.6.2"
+  },
+  "dependencies": {
+    "md5": "^2.2.1"
   }
 }
