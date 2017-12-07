@@ -1,4 +1,4 @@
-import { isNice } from './index'
+import { createNiceChecker } from './'
 
 let puzzleInput = `
 uxcplgxnkwbdwhrp
@@ -1003,6 +1003,26 @@ gtjscincktlwwkkf
 wtebigbaythklkbd`
 
 test('solves part 1', () => {
+  let isNice = createNiceChecker(string => {
+    function containsAtLeastThreeVowels(input: string): boolean {
+      let occurrences = input.match(/[aeiou]/g) || []
+      return occurrences.length >= 3
+    }
+
+    function hasDoubleLetters(input: string): boolean {
+      return input.match(/([a-z])\1/) !== null
+    }
+
+    function containsDisallowedSubstring(input: string): boolean {
+      return input.match(/ab|cd|pq|xy/) !== null
+    }
+
+    return (
+      containsAtLeastThreeVowels(string) &&
+      hasDoubleLetters(string) &&
+      !containsDisallowedSubstring(string)
+    )
+  })
   expect(isNice('ugknbfddgicrmopn')).toBeTruthy()
   expect(isNice('aaa')).toBeTruthy()
   expect(isNice('jchzalrnumimnmhp')).toBeFalsy()
@@ -1015,4 +1035,24 @@ test('solves part 1', () => {
     0
   )
   expect(totalNumberOfNiceStrings).toBe(236)
+})
+
+test('solves part 2', () => {
+  let isNice = createNiceChecker(string => {
+    let repeat = string.match(/(..).*\1/)
+    let repeatSpaced = string.match(/(.).\1/)
+    return repeat !== null && repeatSpaced !== null
+  })
+
+  expect(isNice('qjhvhtzxzqqjkmpb')).toBeTruthy()
+  expect(isNice('xxyxx')).toBeTruthy()
+  expect(isNice('uurcxstgmygtbstg')).toBeFalsy()
+  expect(isNice('ieodomkazucvgmuy')).toBeFalsy()
+
+  let strings = puzzleInput.split('\n').filter(Boolean)
+  let totalNumberOfNiceStrings = strings.reduce(
+    (total, str) => (isNice(str) ? total + 1 : total),
+    0
+  )
+  expect(totalNumberOfNiceStrings).toBe(51)
 })
