@@ -20,6 +20,7 @@
     "typescript": "^2.6.2"
   },
   "dependencies": {
+    "@sindresorhus/is": "^0.7.0",
     "md5": "^2.2.1"
   }
 }
