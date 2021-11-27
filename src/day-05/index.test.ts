@@ -1003,7 +1003,7 @@ gtjscincktlwwkkf
 wtebigbaythklkbd`
 
 test('solves part 1', () => {
-  let isNice = createNiceChecker(string => {
+  let isNice = createNiceChecker((string) => {
     function containsAtLeastThreeVowels(input: string): boolean {
       let occurrences = input.match(/[aeiou]/g) || []
       return occurrences.length >= 3
@@ -1038,7 +1038,7 @@ test('solves part 1', () => {
 })
 
 test('solves part 2', () => {
-  let isNice = createNiceChecker(string => {
+  let isNice = createNiceChecker((string) => {
     let repeat = string.match(/(..).*\1/)
     let repeatSpaced = string.match(/(.).\1/)
     return repeat !== null && repeatSpaced !== null

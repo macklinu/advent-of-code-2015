@@ -10,7 +10,7 @@ export function findSumOfAllNumbersIgnoringRed(input: string): number {
     if (is.number(node)) {
       return node
     }
-    if (is.array(node)) {
+    if (is.array<number>(node)) {
       return node.reduce((sum, n) => sum + traverseNode(n), 0)
     }
     if (is.object(node)) {
