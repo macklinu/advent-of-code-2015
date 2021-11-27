@@ -10,4 +10,6 @@ export function solvePartTwo(input: string): number {
   }, 0)
 }
 
-let parseInput = (input: string): string[] => input.split('\n').filter(Boolean)
+function parseInput(input: string): string[] {
+  return input.split('\n').filter(Boolean)
+}

@@ -1,6 +1,5 @@
 import * as path from 'path'
 import * as fs from 'fs'
-import * as util from 'util'
 
 import { solvePartOne, solvePartTwo } from './'
 
@@ -20,7 +19,6 @@ test('solves part 2', async () => {
   expect(solvePartTwo(puzzleInput)).toBe(2117)
 })
 
-async function readFile(filename: string): Promise<string> {
-  let read = util.promisify(fs.readFile)
-  return await read(path.join(__dirname, filename), 'utf8')
+function readFile(filename: string): Promise<string> {
+  return fs.promises.readFile(path.join(__dirname, filename), 'utf8')
 }

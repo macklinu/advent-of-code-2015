@@ -1,6 +1,5 @@
 import * as fs from 'fs'
 import * as path from 'path'
-import * as util from 'util'
 
 import { createCalculator } from './'
 
@@ -37,8 +36,7 @@ test('solves part 2', async () => {
   expect(calculateTotalRibbon(puzzleInput)).toBe(3812909)
 })
 
-async function getPuzzleInput(): Promise<string> {
-  let readFile = util.promisify(fs.readFile)
+function getPuzzleInput(): Promise<string> {
   let pathToFile = path.join(__dirname, 'puzzle-input.txt')
-  return await readFile(pathToFile, 'utf8')
+  return fs.promises.readFile(pathToFile, 'utf8')
 }
